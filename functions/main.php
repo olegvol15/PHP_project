@@ -31,5 +31,23 @@ function sendMail(){
 
 
 function uploadImage(){
-    
+    echo "<pre>" . print_r($_FILES, true) . "</pre>";
 }
+
+
+/* 
+
+Array
+(
+    [image] => Array
+        (
+            [name] => modulnyy-parket-model-8-85642494.jpg
+            [full_path] => modulnyy-parket-model-8-85642494.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\OSPanel\userdata\temp\upload\phpBD55.tmp
+            [error] => 0
+            [size] => 121064
+        )
+
+)
+*/
