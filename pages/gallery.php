@@ -1,5 +1,9 @@
 <h1>Gallery Page</h1>
 
+<?php
+    Messages::getMessage();
+?>
+
 <form action="index.php" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
