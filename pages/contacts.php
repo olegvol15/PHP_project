@@ -4,7 +4,7 @@
     Messages::getMessage();
 ?>
 
-<form action="/contacts" method="post">
+<form action="/project-p22/contacts" method="post">
 
     <div class="form-group mt-3">
         <label for="name">Name: </label>
