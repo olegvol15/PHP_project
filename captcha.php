@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 $length = 6;
 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

@@ -1,5 +1,21 @@
 <?php require_once "functions/main.php"; ?>
 
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+
+$publicPages = ['login', 'register'];
+$page = $_GET['page'] ?? 'home';
+
+if (!isset($_SESSION['user']) && !in_array($page, $publicPages)) {
+    header("Location: /project-p22/?page=login");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +27,8 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<?php if (isset($_SESSION['user'])): ?>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/project-p22/">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
@@ -28,19 +45,26 @@
                 <li class="nav-item">
                     <a class="nav-link <?= ($_GET['page'] ?? '') === 'contacts' ? 'active' : '' ?>" href="/project-p22/contacts">Contacts</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= ($_GET['page'] ?? '') === 'register' ? 'active' : '' ?>" href="/project-p22/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= ($_GET['page'] ?? '') === 'login' ? 'active' : '' ?>" href="/project-p22/login">Login</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link <?= ($_GET['page'] ?? '') === 'login' ? 'active' : '' ?>" href="/project-p22/reviews">Reviews</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <span class="nav-link disabled"><?= $_SESSION['user'] ?? '' ?></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="/project-p22/logout.php">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<?php endif; ?>
+
+
 
 <div class="container mt-4">
     <?php

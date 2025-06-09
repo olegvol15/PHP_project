@@ -1,26 +1,51 @@
-<h1>Create new account</h1>
-
 <?php
-    Messages::getMessage();
+if (isset($_SESSION['user'])) {
+    header("Location: /project-p22/");
+    exit;
+}
 ?>
 
-<form action="?page=register" method="post">
-  <input type="hidden" name="action" value="registerUser">
 
-    <div class="form-group mt-3">
-        <label for="email">Email: </label>
-        <input type="email" name="email" class="form-control" value="<?= OldInput::get('email') ?>">
-    </div>
+<?php
 
-    <div class="form-group mt-3">
-        <label for="password">Password:</label>
-        <input type="password" name="password" class="form-control">
-    </div>
 
-    <div class="form-group mt-3">
-        <label for="repeated_password">Repeat password:</label>
-        <input type="password" name="repeated_password" class="form-control">
-    </div>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
 
-    <button class="btn btn-primary mt-3" name="action" value="registerUser">Register</button>
-</form>
+    if ($email && $password) {
+        $users = file_exists('users.json') ? json_decode(file_get_contents('users.json'), true) : [];
+
+        foreach ($users as $user) {
+            if ($user['email'] === $email) {
+                echo "<div class='alert alert-danger'>Email already registered.</div>";
+                return;
+            }
+        }
+
+        $users[] = ['email' => $email, 'password' => password_hash($password, PASSWORD_DEFAULT)];
+        file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
+
+        header("Location: /project-p22/?page=login");
+        exit;
+    }
+}
+?>
+
+<link rel="stylesheet" href="/project-p22/css/auth.css">
+
+<div class="auth-center">
+    <form method="post" class="auth-box">
+        <h2>Sign Up</h2>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Register</button>
+
+        <p class="switch-link">Already have an account?
+            <a href="?page=login">Sign In</a>
+        </p>
+    </form>
+</div>
+
+
