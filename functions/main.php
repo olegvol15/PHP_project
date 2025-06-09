@@ -142,6 +142,37 @@ function loginUser(){
     redirect("login");
 
 }
+
+function sendReview()
+{
+    $name = $_POST['name'] ?? '';
+    $message = $_POST['message'] ?? '';
+    $captcha = $_POST['captcha'] ?? '';
+
+    if (empty($name) || empty($message || empty($captcha))) {
+        Messages::setMessage("All fields are required", 'danger');
+        OldInput::set($_POST);
+        redirect("reviews");
+    }
+
+    if ($captcha !== $_SESSION['captcha']) {
+        Messages::setMessage("Invalid captcha", 'danger');
+        OldInput::set($_POST);
+        redirect("reviews");
+    }
+
+    $time = time();
+
+    $reviews = json_decode(file_get_contents("reviews.json"), true);
+    $reviews[] = compact('name', 'message', 'time');
+
+    $f = fopen("reviews.json", "w");
+    fwrite($f, json_encode($reviews));
+    fclose($f);
+
+    Messages::setMessage("Review sent successfully");
+    redirect("reviews");
+}
 /* 
 
 Array

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oleh's project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -32,6 +33,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= ($_GET['page'] ?? '') === 'login' ? 'active' : '' ?>" href="/project-p22/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= ($_GET['page'] ?? '') === 'login' ? 'active' : '' ?>" href="/project-p22/reviews">Reviews</a>
                 </li>
             </ul>
         </div>
